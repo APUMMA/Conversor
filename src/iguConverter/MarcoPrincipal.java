@@ -1,6 +1,5 @@
 package iguConverter;
 
-// import java.awt.*;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -19,8 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-// import javax.swing.;
-
 
 
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <<<<<CREANDO LA INTERFAZ GRAFICA>>>>> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -33,7 +30,6 @@ public class MarcoPrincipal extends JFrame {
   private JTextField txtImporte;
   private JComboBox<?> cmbMonedaBase, cmbMonedaFinal;
   private JButton btnConvertir, btnLimpiar;
-  // private FlowLayout alineacion;
  
 
   // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <<<<<METODO CONSTRUCTOR>>>>> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -48,7 +44,7 @@ public class MarcoPrincipal extends JFrame {
     // Configuraciones de la Interfaz de Usuario.
     congigurarMarcoPrincipal(container);
     configurarComponentesFormulario(container);
-    // configurarEventosFormulario();
+    configurarEventosFormulario();
 
   }
 
@@ -142,5 +138,88 @@ public class MarcoPrincipal extends JFrame {
 
   }  
 
+    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <<<<<EVENTOS DEL FORMULARIO>>>>> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    double resultado = 0;
+    String de = "EUR";
+    String a = "USD";
+  
+    private void configurarEventosFormulario() {
+  
+      cmbMonedaBase .addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent event) {
+          de = cmbMonedaBase.getSelectedItem().toString();
+          
+        }
+      });
+  
+      cmbMonedaFinal .addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent event) {
+          a = cmbMonedaFinal.getSelectedItem().toString();
+          
+        }
+      });
+  
+      btnLimpiar .addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent event) {
+          limpiarFormulario();
+        }
+      });
+  
+      btnConvertir .addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent event) {
+          convertir();
+        }
+      });
+  
+    }
+  
+    // --------------------------------- <<<<<Metodo limpiar formulario>>>>> ----------------------------------
+    private void limpiarFormulario() {
+      txtImporte.setText("");
+      cmbMonedaBase.setSelectedIndex(0);
+      cmbMonedaFinal.setSelectedIndex(0);
+      lblImporte2.setText(" ");
+      lblResultado.setText(" ");
+      lblMonedaBase.setText(" ");
+      lblMonedaFinal.setText(" ");
+  
+    }
+  
+    // -------------------------------------- <<<<<Metodo convertir>>>>> --------------------------------------
+    int importe;
+  
+    private void convertir() {
+      // Validando los datos ingresados en el JTextField.
+      if (txtImporte.getText().isBlank() || !validarNumero(txtImporte.getText().trim())) {
+  
+        JOptionPane.showMessageDialog(this, "El campo importe debe ser numérico");
+  
+      }else{
+        importe = Integer.parseInt(txtImporte.getText());
+        lblImporte2.setText(" " + importe +" =");
+        // TODO
+        lblResultado.setText(" " + importe);
+        lblMonedaBase.setText(" " + importe +" ="); 
+        lblMonedaFinal.setText(" " + importe +" =");
+  
+        JOptionPane.showMessageDialog(this, "Conversión realizada");
+  
+      }
+      
+    }
+  
+    // ---------------------------- <<<<<Metodo validar números del text Field>>>>> ---------------------------
+    public static boolean validarNumero(String valNumeros) {
+      // Validamos los números con una expresión regular.
+      // El asterisco indica que podemos ingresar x cantidad de números.
+      // Expresión para validar "[a-zA-Z]" texto.
+      // Expresión para limitar el número de carácteres {1,5}, en este caso serían 5.
+      return valNumeros.matches("[0-9]*");
+  
+    }
+  
+    public String aMoneda(double importe){
+      return null;
+    }
   
 }
